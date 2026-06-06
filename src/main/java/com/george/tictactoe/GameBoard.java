@@ -1,11 +1,14 @@
-package uk.ac.soton.comp1206;
+package com.george.tictactoe;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameBoard {
 
     private int size;
     private String[][] board;
     private String currentPlayer = "X";
+    private ComputerPlayer computerPlayer = new ComputerPlayer();
 
     public GameBoard(int size){
         this.size = size;
@@ -14,6 +17,14 @@ public class GameBoard {
     }
     public String getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public String getCell(int row, int col) {
+        return board[row][col];
     }
 
     public void resetBoard(){
@@ -41,6 +52,52 @@ public class GameBoard {
     }
 
     public int[] findBestMoveForCurrentPlayer() {
+        return findBestMoveForCurrentPlayer(AiDifficulty.MEDIUM);
+    }
+
+    public int[] findBestMoveForCurrentPlayer(AiDifficulty difficulty) {
+        return computerPlayer.chooseMove(copy(), currentPlayer, difficulty);
+    }
+
+    public List<int[]> findEmptyCells() {
+        List<int[]> emptyCells = new ArrayList<>();
+
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                if (board[row][col].equals("")) {
+                    emptyCells.add(new int[]{row, col});
+                }
+            }
+        }
+
+        return emptyCells;
+    }
+
+    public boolean makeMoveForPlayer(int row, int col, String player) {
+        if (board[row][col].equals("")) {
+            board[row][col] = player;
+            return true;
+        }
+
+        return false;
+    }
+
+    public void clearCell(int row, int col) {
+        board[row][col] = "";
+    }
+
+    public GameBoard copy() {
+        GameBoard copy = new GameBoard(size);
+        copy.currentPlayer = currentPlayer;
+
+        for (int row = 0; row < size; row++) {
+            System.arraycopy(board[row], 0, copy.board[row], 0, size);
+        }
+
+        return copy;
+    }
+
+    public int[] findBasicAiMove() {
         int[] winningMove = findMoveThatWouldWin(currentPlayer);
         if (winningMove != null) {
             return winningMove;
@@ -61,7 +118,7 @@ public class GameBoard {
         return findFirstEmptyCell();
     }
 
-    private int[] findMoveThatWouldWin(String player) {
+    public int[] findMoveThatWouldWin(String player) {
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
                 if (board[row][col].equals("")) {

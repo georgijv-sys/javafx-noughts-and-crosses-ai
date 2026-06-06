@@ -1,5 +1,4 @@
-module uk.ac.soton.comp1206 {
+module com.george.tictactoe {
     requires javafx.controls;
-    requires java.desktop;
-    exports uk.ac.soton.comp1206;
+    exports com.george.tictactoe;
 }
