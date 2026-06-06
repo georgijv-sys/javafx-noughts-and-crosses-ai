@@ -1,9 +1,20 @@
 # Tic Tac Toe JavaFX
 
+
+
 A JavaFX implementation of Noughts and Crosses with configurable board sizes, score tracking, and three AI difficulty levels.
 
 This project started as a simple desktop game and was refined into a cleaner portfolio project: the interface remains lightweight and familiar, while the game logic and computer player now show stronger Java, JavaFX, algorithmic, and Maven skills.
+## Key Skills Demonstrated
 
+- Java Object-Oriented Programming
+- JavaFX GUI Development
+- Minimax Search
+- Alpha-Beta Pruning
+- Algorithm Design
+- Unit Testing with JUnit 5
+- Maven Build Management
+- Separation of UI and Business Logic
 ## Features
 
 - JavaFX desktop interface with setup, game board, game-over, and score views.
