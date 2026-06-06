@@ -1,10 +1,11 @@
-package uk.ac.soton.comp1206;
+package com.george.tictactoe;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -29,6 +30,7 @@ public class NoughtsAndCrossesApp extends Application {
     private int xWins=0;
     private int draws = 0;
     private boolean playWithAi = false;
+    private AiDifficulty aiDifficulty = AiDifficulty.HARD;
 
 
     @Override
@@ -72,6 +74,18 @@ public class NoughtsAndCrossesApp extends Application {
         modeLine.setSpacing(15);
         modeLine.getChildren().addAll(twoPlayersButton, aiButton);
 
+        // choosing AI difficulty
+        Label difficultyLabel = new Label("AI difficulty:");
+        difficultyLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;");
+        ComboBox<AiDifficulty> difficultyBox = new ComboBox<>();
+        difficultyBox.getItems().addAll(AiDifficulty.EASY, AiDifficulty.MEDIUM, AiDifficulty.HARD);
+        difficultyBox.setValue(AiDifficulty.HARD);
+        difficultyBox.setDisable(true);
+        difficultyBox.setStyle("-fx-background-radius: 8; -fx-padding: 4; -fx-font-size: 14px;");
+        HBox difficultyLine = new HBox();
+        difficultyLine.setSpacing(10);
+        difficultyLine.getChildren().addAll(difficultyLabel, difficultyBox);
+
         // choosing a name for O
         Label thirdLabel = new Label("O:   ");
         thirdLabel.setStyle("-fx-text-fill: #f87171; -fx-font-size: 16px; -fx-font-weight: bold;");
@@ -84,17 +98,19 @@ public class NoughtsAndCrossesApp extends Application {
         aiButton.setOnAction(e -> {
             yName.setText("AI");
             yName.setDisable(true);
+            difficultyBox.setDisable(false);
         });
 
         twoPlayersButton.setOnAction(e -> {
             yName.clear();
             yName.setDisable(false);
+            difficultyBox.setDisable(true);
         });
 
         Button startButton = new Button("Start");
         startButton.setStyle("-fx-background-color: #22c55e; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20 10 20;");
 
-        root.getChildren().addAll(firstLabel, sizeField, modeLabel, modeLine, line2, line3, emptyLabel, startButton);
+        root.getChildren().addAll(firstLabel, sizeField, modeLabel, modeLine, difficultyLine, line2, line3, emptyLabel, startButton);
 
         // disables the start button until both names are entered
         startButton.disableProperty().bind(
@@ -136,6 +152,7 @@ public class NoughtsAndCrossesApp extends Application {
             }
 
             playWithAi = aiButton.isSelected();
+            aiDifficulty = difficultyBox.getValue();
 
             xPlayerName.set(xName.getText());
             if (playWithAi) {
@@ -151,7 +168,7 @@ public class NoughtsAndCrossesApp extends Application {
             startMainScreen(stage);
         });
 
-        Scene scene = new Scene(root, 420, 320);
+        Scene scene = new Scene(root, 420, 360);
         stage.setTitle("Nought and Crosses");
         stage.setScene(scene);
         stage.show();
@@ -287,7 +304,7 @@ public class NoughtsAndCrossesApp extends Application {
     }
 
     private void makeAiMove(Stage stage) {
-        int[] aiMove = gameBoard.findBestMoveForCurrentPlayer();
+        int[] aiMove = gameBoard.findBestMoveForCurrentPlayer(aiDifficulty);
 
         if (aiMove == null) {
             return;
