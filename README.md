@@ -5,6 +5,25 @@
 A JavaFX implementation of Noughts and Crosses with configurable board sizes, score tracking, and three AI difficulty levels.
 
 This project started as a simple desktop game and was refined into a cleaner portfolio project: the interface remains lightweight and familiar, while the game logic and computer player now show stronger Java, JavaFX, algorithmic, and Maven skills.
+
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/setup.png" alt="Setup screen with grid size, game mode, AI difficulty, and player names" width="360">
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/gameplay.png" alt="In-progress 3x3 match against the AI" width="360">
+</p>
+
+<p align="center"><em>Game setup with mode and AI difficulty selection (left) and an in-progress match against the AI (right).</em></p>
+
+<p align="center">
+  <img src="docs/screenshots/game-over.png" alt="Game over dialog announcing the winner" width="240">
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/score.png" alt="Score dialog tracking wins and draws" width="240">
+</p>
+
+<p align="center"><em>Game-over announcement (left) and running match score (right).</em></p>
+
 ## Key Skills Demonstrated
 
 - Java Object-Oriented Programming
